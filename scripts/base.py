@@ -36,15 +36,22 @@ class Base:
     string = f"{datetime.now()}\nDisciplina,Dia,Inicio,Fim\n"
     for i, turma in enumerate(turmas):
       print(f"{turma} ({i+1}/{len(turmas)})")
-      disc = self.jupiter.disciplina_codigo(turma) # Captura as infos da turma no JupiterWeb
+      try:
+        disc = self.jupiter.disciplina_codigo(turma) # Captura as infos da turma no JupiterWeb
+      except:
+        print('deu ruim')
+        continue
       for oferecimento in disc.oferecimento:
-        for horario in oferecimento['Horários']:
-          hora = horario['Horário']
-          try:
-            dia, inicio, fim = hora.split()
-            if dia not in ['seg','ter','qua','qui','sex','sab','dom']: continue
-            string += f"{turma},{dia},{inicio},{fim}\n"
-          except:
-            continue # Sem tratamento pois é um erro da biblioteca jupiterweb
+        try:
+          for horario in oferecimento['Horários']:
+            hora = horario['Horário']
+            try:
+              dia, inicio, fim = hora.split()
+              if dia not in ['seg','ter','qua','qui','sex','sab','dom']: continue
+              string += f"{turma},{dia},{inicio},{fim}\n"
+            except:
+              continue # Sem tratamento pois é um erro da biblioteca jupiterweb
+        except:
+          print('opa: ', oferecimento)
     with open(arquivo, 'w') as arq:
       arq.write(string)

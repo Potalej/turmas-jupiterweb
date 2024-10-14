@@ -6,10 +6,14 @@ from scripts.base import Base
 class Menu:
 
   institutos_padrao = {
+    '14': 'IAG',
     '21': 'IO',
+    '41': 'IB',
+    '42': 'ICB',
     '43': 'IF',
     '44': 'IGc',
     '45': 'IME',
+    '46': 'IQ',
   }
   acoes = [
     'Baixar turmas do JupiterWeb',
