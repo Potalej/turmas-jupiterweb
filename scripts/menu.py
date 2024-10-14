@@ -1,5 +1,5 @@
 from PyInquirer import prompt
-from os import listdir
+from os import listdir, mkdir, path
 from scripts.analise import Analise
 from scripts.base import Base
 
@@ -90,3 +90,6 @@ class Menu:
     html = base.html_turmas_instituto(cod)
     turmas = base.captura_turmas(html)
     base.salva_turmas_horarios(turmas, f"{self.dir_padrao}base_{cod}.csv")
+
+if not path.exists(Menu.dir_padrao):
+  mkdir(Menu.dir_padrao)
